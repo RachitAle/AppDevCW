@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35312.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pathsala", "Pathsala\Pathsala.csproj", "{114A38CA-E67F-447A-B4F8-8F1C82FFDFC6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{114A38CA-E67F-447A-B4F8-8F1C82FFDFC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{114A38CA-E67F-447A-B4F8-8F1C82FFDFC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{114A38CA-E67F-447A-B4F8-8F1C82FFDFC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{114A38CA-E67F-447A-B4F8-8F1C82FFDFC6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2969FC8D-A01C-4F69-ADCE-3F94CB294CD5}
+	EndGlobalSection
+EndGlobal
