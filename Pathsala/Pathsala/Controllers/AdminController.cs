@@ -20,6 +20,13 @@ namespace Pathsala.Controllers
             _adminService = adminService;
         }
 
+        [HttpGet("books")]
+        public async Task<IActionResult> GetBooks()
+        {
+            var books = await _adminService.GetBooksAsync();
+            return Ok(books);
+        }
+
         [HttpPost("books")]
         public async Task<IActionResult> AddBook([FromBody] BookDto bookDto)
         {
@@ -33,7 +40,7 @@ namespace Pathsala.Controllers
                 Language = bookDto.Language,
                 Format = bookDto.Format,
                 Publisher = bookDto.Publisher,
-                PublicationDate = bookDto.PublicationDate,
+                PublicationDate = DateTime.SpecifyKind(bookDto.PublicationDate, DateTimeKind.Utc),
                 Rating = bookDto.Rating
             };
             await _adminService.AddBookAsync(book, bookDto.InitialStock);
@@ -54,7 +61,7 @@ namespace Pathsala.Controllers
                 Language = bookDto.Language,
                 Format = bookDto.Format,
                 Publisher = bookDto.Publisher,
-                PublicationDate = bookDto.PublicationDate,
+                PublicationDate = DateTime.SpecifyKind(bookDto.PublicationDate, DateTimeKind.Utc),
                 Rating = bookDto.Rating
             };
             await _adminService.UpdateBookAsync(book);
@@ -82,8 +89,8 @@ namespace Pathsala.Controllers
             {
                 BookId = discountDto.BookId,
                 DiscountPercentage = discountDto.DiscountPercentage,
-                StartDate = discountDto.StartDate,
-                EndDate = discountDto.EndDate,
+                StartDate = DateTime.SpecifyKind(discountDto.StartDate, DateTimeKind.Utc),
+                EndDate = DateTime.SpecifyKind(discountDto.EndDate, DateTimeKind.Utc),
                 OnSaleFlag = discountDto.OnSaleFlag
             };
             await _adminService.AddDiscountAsync(discount);
@@ -103,8 +110,8 @@ namespace Pathsala.Controllers
             var announcement = new Announcement
             {
                 Message = announcementDto.Message,
-                StartDate = announcementDto.StartDate,
-                EndDate = announcementDto.EndDate
+                StartDate = DateTime.SpecifyKind(announcementDto.StartDate, DateTimeKind.Utc),
+                EndDate = DateTime.SpecifyKind(announcementDto.EndDate, DateTimeKind.Utc)
             };
             await _adminService.AddAnnouncementAsync(announcement);
             return CreatedAtAction(nameof(AddAnnouncement), new { id = announcement.Id }, announcement);
