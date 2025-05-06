@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Pathsala.Data;
+using Pathsala.Models;
+using System;
 
 namespace Pathsala.Controllers
 {
@@ -8,17 +11,28 @@ namespace Pathsala.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        [HttpGet]
-        public IActionResult Get()
+        private readonly ApplicationDbContext _context;
+
+        public ProductsController(ApplicationDbContext context)
         {
-            return Ok(new { Message = "This is a protected endpoint" });
+            _context = context;
         }
 
-        [Authorize(Roles = "Customer")]
-        [HttpGet("customer")]
-        public IActionResult GetCustomer()
+        [HttpGet]
+        public async Task<IActionResult> GetBooks(int page = 1, int pageSize = 10)
         {
-            return Ok(new { Message = "This endpoint is only accessible to users with the Customer role" });
+            var books = await _context.Books
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+            return Ok(books);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetBook(int id)
+        {
+            var book = await _context.Books.FindAsync(id);
+            return book == null ? NotFound() : Ok(book);
         }
     }
 }

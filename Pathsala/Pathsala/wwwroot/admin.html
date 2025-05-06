@@ -1,0 +1,33 @@
+﻿<!-- wwwroot/admin.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+</head>
+<body>
+    <h2>Welcome Admin</h2>
+    <button onclick="logout()">Logout</button>
+    <div id="adminData"></div>
+
+    <script>
+        const token = localStorage.getItem("jwt");
+        if (!token) {
+            alert("Not authorized!");
+            window.location.href = "login.html";
+        }
+
+        fetch("/api/Admin/books", {
+            headers: { "Authorization": "Bearer " + token }
+        })
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById("adminData").innerText = JSON.stringify(data, null, 2);
+        });
+
+        function logout() {
+            localStorage.removeItem("jwt");
+            window.location.href = "login.html";
+        }
+    </script>
+</body>
+</html>
