@@ -4,11 +4,13 @@ using Pathsala.Data;
 using Pathsala.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.Collections.Generic;
 
 namespace Pathsala.Services
 {
     public interface IAdminRepository
     {
+        Task<List<Book>> GetBooksAsync();
         Task AddBookAsync(Book book, int initialStock);
         Task UpdateBookAsync(Book book);
         Task DeleteBookAsync(int bookId);
@@ -26,6 +28,11 @@ namespace Pathsala.Services
         public AdminRepository(ApplicationDbContext context)
         {
             _context = context;
+        }
+
+        public async Task<List<Book>> GetBooksAsync()
+        {
+            return await _context.Books.ToListAsync();
         }
 
         public async Task AddBookAsync(Book book, int initialStock)
@@ -110,6 +117,11 @@ namespace Pathsala.Services
         public AdminService(IAdminRepository repository)
         {
             _repository = repository;
+        }
+
+        public async Task<List<Book>> GetBooksAsync()
+        {
+            return await _repository.GetBooksAsync();
         }
 
         public async Task AddBookAsync(Book book, int initialStock)
