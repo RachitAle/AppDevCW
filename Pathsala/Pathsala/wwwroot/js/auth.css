@@ -1,0 +1,55 @@
+﻿// wwwroot/js/auth.js
+
+// Login
+const loginForm = document.getElementById("loginForm");
+if (loginForm) {
+    loginForm .addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const data = {
+            email: document.getElementById("email").value,
+            password: document.getElementById("password").value
+        };
+
+        fetch('/api/Auth/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.isSuccess) {
+                localStorage.setItem("jwt", data.token);
+                alert("Login success!");
+                window.location.href = "admin.html";
+            } else {
+                alert("Login failed: " + data.message);
+            }
+        });
+    });
+}
+
+// Register
+const registerForm = document.getElementById("registerForm");
+if (registerForm) {
+    registerForm .addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const data = {
+            fullName: document.getElementById("fullName").value,
+            email: document.getElementById("email").value,
+            password: document.getElementById("password").value
+        };
+
+        fetch('/api/Auth/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
+        .then(res => res.json())
+        .then(data => {
+            alert("Registered successfully!");
+            window.location.href = "login.html";
+        });
+    });
+}

@@ -1,0 +1,13 @@
+﻿/* wwwroot/css/styles.css */
+body {
+    font-family: Arial;
+    padding: 20px;
+    text-align: center;
+}
+
+input, button {
+    display: block;
+    margin: 10px auto;
+    padding: 10px;
+    width: 200px;
+}
