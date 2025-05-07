@@ -22,6 +22,9 @@ builder.Services.AddScoped<TokenService>();
 builder.Services.AddScoped<IAdminRepository, AdminRepository>();
 builder.Services.AddScoped<AdminService>();
 
+// Register FileService
+builder.Services.AddScoped<IFileService, FileService>();
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -73,6 +76,18 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
+// Add CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReactApp", policy =>
+    {
+        policy.WithOrigins("http://localhost:5173")
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials();
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -87,6 +102,7 @@ app.UseDefaultFiles();
 app.UseStaticFiles();
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseCors("AllowReactApp"); // Enable CORS with the defined policy
 app.MapControllers();
 
 // Seed roles and admin user
@@ -124,5 +140,3 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.Run();
-app.UseDefaultFiles();
-//app.UseStaticFiles();   
