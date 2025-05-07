@@ -7,6 +7,7 @@ using Pathsala.Data;
 using Pathsala.Models;
 using Pathsala.Services;
 using Microsoft.OpenApi.Models;
+using Pathsala.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
 builder.Services.AddScoped<TokenService>();
 builder.Services.AddScoped<IAdminRepository, AdminRepository>();
 builder.Services.AddScoped<AdminService>();
+builder.Services.AddScoped<IReviewService, ReviewService>();
 
 // Register FileService
 builder.Services.AddScoped<IFileService, FileService>();
