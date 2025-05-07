@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Pathsala.DTOs;
 using Pathsala.Models;
-using Pathsala.Services;
+using Pathsala.Services.Interfaces;
 using System.Security.Claims;
 
 [ApiController]

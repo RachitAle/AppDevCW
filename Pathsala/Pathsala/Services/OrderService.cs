@@ -3,6 +3,8 @@ using Pathsala.Data;
 using Pathsala.DTOs;
 //using Pathsala.DTOs.Order;
 using Pathsala.Models;
+using Pathsala.Services.Interfaces;
+
 //using Pathsala.Services.Interfaces;
 using System;
 

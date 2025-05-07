@@ -1,6 +1,6 @@
 ﻿using Pathsala.DTOs;
 
-namespace Pathsala.Services
+namespace Pathsala.Services.Interfaces
 {
     public interface IOrderService
     {
@@ -10,7 +10,7 @@ namespace Pathsala.Services
         //Task<bool> CancelOrderAsync(int orderId, string userId);
         Task<OrderResponseDto> CreateOrderAsync(OrderRequestDto dto, string userId);
         Task CancelOrderAsync(int orderId, string userId);
-       
+
 
     }
 
