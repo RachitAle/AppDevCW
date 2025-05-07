@@ -23,6 +23,6 @@ namespace Pathsala.Data
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<Review> Reviews { get; set; }
-        //public DbSet<ClaimCode> ClaimCodes { get; set; }
+        public DbSet<ClaimCode> ClaimCodes { get; set; }
     }
 }

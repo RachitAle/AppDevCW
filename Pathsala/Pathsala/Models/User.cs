@@ -9,6 +9,7 @@
         public int SuccessfulOrders { get; set; }
         public ICollection<Order> Orders { get; set; }
         public ICollection<Bookmark> Bookmarks { get; set; }
+        public string UserName { get; internal set; }
     }
 
 }
