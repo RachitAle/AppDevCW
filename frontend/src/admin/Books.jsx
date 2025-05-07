@@ -15,8 +15,8 @@ const BookManagement = () => {
   const [currentBook, setCurrentBook] = useState(null);
   const booksPerPage = 9;
 
-  // API base URL - using the same port as in your example
-  const API_BASE_URL = "http://localhost:4001/api/Admin";
+  // API base URL - make sure this matches your actual backend URL
+  const API_BASE_URL = "http://localhost:7084/api/Admin"; // Using relative URL with proxy
 
   // Load mock books data since there's no GET endpoint in the provided controller
   useEffect(() => {
@@ -94,7 +94,13 @@ const BookManagement = () => {
       setShowAddBookModal(false);
       setError(null);
     } catch (err) {
-      setError(err.response?.data || err.message);
+      if (err.code === "ERR_NETWORK") {
+        setError(
+          `Connection refused. Make sure your API server is running at ${API_BASE_URL}. Error: ${err.message}`
+        );
+      } else {
+        setError(err.response?.data || err.message);
+      }
       console.error("Error adding book:", err);
     } finally {
       setLoading(false);
@@ -129,7 +135,13 @@ const BookManagement = () => {
       setCurrentBook(null);
       setError(null);
     } catch (err) {
-      setError(err.response?.data || err.message);
+      if (err.code === "ERR_NETWORK") {
+        setError(
+          `Connection refused. Make sure your API server is running at ${API_BASE_URL}. Error: ${err.message}`
+        );
+      } else {
+        setError(err.response?.data || err.message);
+      }
       console.error("Error updating book:", err);
     } finally {
       setLoading(false);
@@ -148,7 +160,13 @@ const BookManagement = () => {
       setBooks(books.filter((book) => book.id !== id));
       setError(null);
     } catch (err) {
-      setError(err.response?.data || err.message);
+      if (err.code === "ERR_NETWORK") {
+        setError(
+          `Connection refused. Make sure your API server is running at ${API_BASE_URL}. Error: ${err.message}`
+        );
+      } else {
+        setError(err.response?.data || err.message);
+      }
       console.error("Error deleting book:", err);
     } finally {
       setLoading(false);
@@ -195,6 +213,18 @@ const BookManagement = () => {
           Using mock data for display since there's no GET endpoint in the
           provided controller.
         </p>
+        <p className="mt-2 text-sm">
+          <strong>Troubleshooting:</strong> If you see "Connection refused"
+          errors, check that:
+        </p>
+        <ul className="list-disc pl-5 mt-1 text-sm">
+          <li>Your .NET API server is running</li>
+          <li>
+            The port in API_BASE_URL matches your server's port (currently using
+            relative URL with proxy)
+          </li>
+          <li>CORS is properly configured on your backend</li>
+        </ul>
       </div>
 
       {/* Error message */}
