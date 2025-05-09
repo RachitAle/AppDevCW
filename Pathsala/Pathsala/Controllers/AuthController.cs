@@ -79,10 +79,18 @@ namespace Pathsala.Controllers
             // Add user to Customer role
             await _userManager.AddToRoleAsync(user, "Customer");
 
+            // Generate and return token
+            var token = await _tokenService.GenerateToken(user);
+            var roles = await _userManager.GetRolesAsync(user);
+
             return Ok(new AuthResponseDto
             {
                 IsSuccess = true,
-                Message = "User created successfully"
+                Token = token,
+                UserName = user.UserName,
+                Email = user.Email,
+                Message = "User created successfully",
+                Roles = roles.ToList()
             });
         }
 
@@ -131,94 +139,7 @@ namespace Pathsala.Controllers
                 Roles = roles.ToList()
             });
         }
-        //[HttpPost("google-login")]
 
-        //public async Task<IActionResult> GoogleLogin([FromBody] GoogleLoginDto model)
-        //{
-        //    if (string.IsNullOrEmpty(model.IdToken))
-        //    {
-        //        return BadRequest(new AuthResponseDto
-        //        {
-        //            IsSuccess = false,
-        //            Message = "Google token is required"
-        //        });
-
-        //    }
-
-        //    try
-        //    {
-        //        // Validate Google token
-        //        var payload = await GoogleJsonWebSignature.ValidateAsync(
-        //            model.IdToken,
-        //            new GoogleJsonWebSignature.ValidationSettings
-        //            {
-        //                Audience = new[] { _configuration["Google:ClientId"] }
-        //            });
-
-        //        // Check if user exists
-        //        var user = await _userManager.FindByEmailAsync(payload.Email);
-        //        if (user == null)
-        //        {
-        //            // Create new user if doesn't exist
-        //            user = new ApplicationUser
-        //            {
-        //                UserName = payload.Email,
-        //                Email = payload.Email,
-        //                EmailConfirmed = true,
-        //                SecurityStamp = Guid.NewGuid().ToString()
-        //            };
-        //            var createResult = await _userManager.CreateAsync(user);
-        //            if (!createResult.Succeeded)
-        //            {
-        //                return BadRequest(new AuthResponseDto
-        //                {
-        //                    IsSuccess = false,
-        //                    Message = "User creation failed: " +
-        //                        string.Join(", ", createResult.Errors.Select(e => e.Description))
-        //                });
-        //            }
-
-        //            // Ensure Customer role exists
-        //            if (!await _roleManager.RoleExistsAsync("Customer"))
-        //            {
-        //                await _roleManager.CreateAsync(new IdentityRole("Customer"));
-        //            }
-
-        //            // Add to Customer role
-        //            var roleResult = await _userManager.AddToRoleAsync(user, "Customer");
-        //            if (!roleResult.Succeeded)
-        //            {
-        //                return BadRequest(new AuthResponseDto
-        //                {
-        //                    IsSuccess = false,
-        //                    Message = "Failed to assign role: " +
-        //                        string.Join(", ", roleResult.Errors.Select(e => e.Description))
-        //                });
-        //            }
-        //        }
-
-        //        // Generate JWT token
-        //        var token = await _tokenService.GenerateToken(user);
-        //        var roles = await _userManager.GetRolesAsync(user);
-
-        //        return Ok(new AuthResponseDto
-        //        {
-        //            IsSuccess = true,
-        //            Token = token,
-        //            UserName = user.UserName,
-        //            Email = user.Email,
-        //            Message = "Google login successful",
-        //            Roles = roles.ToList()
-        //        });
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return BadRequest(new AuthResponseDto
-        //        {
-        //            IsSuccess = false,
-        //            Message = $"Authentication failed: {ex.Message}"
-        //        });
-        //    }
-        //}
+        // [HttpPost("google-login")] - Uncomment and implement if needed
     }
 }

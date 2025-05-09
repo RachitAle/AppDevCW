@@ -2,86 +2,86 @@ import { useState } from "react";
 import { Search, ChevronDown, Edit, Trash, Plus, X } from "lucide-react";
 
 const Members = () => {
-  // Mock data for members
+  // Updated mock data with unique members
   const [members, setMembers] = useState([
     {
       id: 1,
-      name: "Elisa Grant",
-      email: "a@gmail.com",
-      phone: "9800000000",
+      name: "Sophie Carter",
+      email: "sophie.carter@example.com",
+      phone: "9123456789",
       status: "Active",
-      orders: 10,
+      orders: 15,
       discount: "Yes",
     },
     {
       id: 2,
-      name: "Elisa Grant",
-      email: "a@gmail.com",
-      phone: "9800000000",
+      name: "Liam Patel",
+      email: "liam.patel@example.com",
+      phone: "9234567890",
       status: "Inactive",
-      orders: 10,
-      discount: "Yes",
-    },
-    {
-      id: 3,
-      name: "Elisa Grant",
-      email: "a@gmail.com",
-      phone: "9800000000",
-      status: "Active",
-      orders: 10,
+      orders: 8,
       discount: "No",
     },
     {
-      id: 4,
-      name: "Elisa Grant",
-      email: "a@gmail.com",
-      phone: "9800000000",
+      id: 3,
+      name: "Ava Nguyen",
+      email: "ava.nguyen@example.com",
+      phone: "9345678901",
       status: "Active",
-      orders: 10,
+      orders: 22,
+      discount: "Yes",
+    },
+    {
+      id: 4,
+      name: "Noah Kim",
+      email: "noah.kim@example.com",
+      phone: "9456789012",
+      status: "Active",
+      orders: 5,
       discount: "No",
     },
     {
       id: 5,
-      name: "Elisa Grant",
-      email: "a@gmail.com",
-      phone: "9800000000",
-      status: "Active",
-      orders: 10,
+      name: "Emma Rodriguez",
+      email: "emma.rodriguez@example.com",
+      phone: "9567890123",
+      status: "Inactive",
+      orders: 18,
       discount: "Yes",
     },
     {
       id: 6,
-      name: "Elisa Grant",
-      email: "a@gmail.com",
-      phone: "9800000000",
+      name: "James Wong",
+      email: "james.wong@example.com",
+      phone: "9678901234",
       status: "Active",
-      orders: 10,
+      orders: 12,
       discount: "Yes",
     },
     {
       id: 7,
-      name: "Elisa Grant",
-      email: "a@gmail.com",
-      phone: "9800000000",
+      name: "Isabella Lopez",
+      email: "isabella.lopez@example.com",
+      phone: "9789012345",
       status: "Active",
-      orders: 20,
-      discount: "Yes",
+      orders: 25,
+      discount: "No",
     },
     {
       id: 8,
-      name: "Elisa Grant",
-      email: "a@gmail.com",
-      phone: "9800000000",
+      name: "Ethan Brown",
+      email: "ethan.brown@example.com",
+      phone: "9890123456",
       status: "Active",
-      orders: 10,
+      orders: 9,
       discount: "Yes",
     },
     {
       id: 9,
-      name: "Elisa Grant",
-      email: "a@gmail.com",
-      phone: "9800000000",
-      status: "Active",
+      name: "Mia Davis",
+      email: "mia.davis@example.com",
+      phone: "9901234567",
+      status: "Inactive",
       orders: 30,
       discount: "Yes",
     },
@@ -209,7 +209,7 @@ const Members = () => {
       <div className="flex justify-center mt-6">
         <nav className="flex items-center space-x-2">
           <button className="px-3 py-1 border border-gray-300 rounded-md hover:bg-gray-50">
-            &lt;
+            
           </button>
           <button className="px-3 py-1 border border-gray-400 bg-gray-100 rounded-md">
             1
@@ -224,7 +224,7 @@ const Members = () => {
             4
           </button>
           <button className="px-3 py-1 border border-gray-300 rounded-md hover:bg-gray-50">
-            &gt;
+            
           </button>
         </nav>
       </div>
