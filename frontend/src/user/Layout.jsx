@@ -1,14 +1,27 @@
 "use client";
 
-import { Link, Outlet, useLocation } from "react-router-dom";
-import { Search, ShoppingCart, ChevronDown, Heart } from "lucide-react";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
+import {
+  Search,
+  ShoppingCart,
+  ChevronDown,
+  Heart,
+  Facebook,
+  Instagram,
+  Twitter,
+  LogOut,
+  User
+} from "lucide-react";
 import { useBookContext } from "./context/BookContext";
+import { useAuth } from "./context/AuthContext";
 import { useState, useEffect } from "react";
 
 const Layout = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const path = location.pathname;
   const { sortBy, setSortBy } = useBookContext();
+  const { isLoggedIn, user, logout } = useAuth();
   const [searchQuery, setSearchQuery] = useState("");
   const [announcement, setAnnouncement] = useState("");
 
@@ -20,12 +33,11 @@ const Layout = () => {
   ];
 
   useEffect(() => {
-    // Fetch announcement from backend
     const fetchAnnouncement = async () => {
       try {
         const response = await fetch("/api/announcement");
         const data = await response.json();
-        setAnnouncement(data.message || ""); // fallback to empty string if not present
+        setAnnouncement(data.message || "");
       } catch (error) {
         console.error("Error fetching announcement:", error);
       }
@@ -47,8 +59,13 @@ const Layout = () => {
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      window.location.href = `/books?search=${encodeURIComponent(searchQuery)}`;
+      navigate(`/books?search=${encodeURIComponent(searchQuery)}`);
     }
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
   };
 
   return (
@@ -93,28 +110,45 @@ const Layout = () => {
           </div>
 
           <div className="flex items-center gap-4">
-            <Link
-              to="/login"
-              className="text-black font-bold hover:text-gray-600"
-            >
-              Login
-            </Link>
-            <Link
-              to="/register"
-              className="text-black font-bold hover:text-gray-600"
-            >
-              Register
-            </Link>
+            {isLoggedIn ? (
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2">
+                  <User size={18} className="text-gray-600" />
+                  <span className="font-medium text-gray-800">
+                    {user?.username || "User"}
+                  </span>
+                </div>
+                <button
+                  onClick={handleLogout}
+                  className="bg-red-500 text-white font-semibold px-4 py-2 rounded flex items-center gap-2 hover:bg-red-600 transition"
+                >
+                  <LogOut size={18} />
+                  Logout
+                </button>
+              </div>
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  className="bg-green-600 text-white font-semibold px-4 py-2 rounded hover:bg-green-700 transition"
+                >
+                  Login
+                </Link>
+                <Link
+                  to="/register"
+                  className="bg-green-600 text-white font-semibold px-4 py-2 rounded hover:bg-gray-800 transition"
+                >
+                  Register
+                </Link>
+              </>
+            )}
           </div>
         </div>
 
         {/* Logo & Actions */}
         <div className="flex justify-between items-center gap-4 flex-wrap">
-          <Link
-            to="/"
-            className="bg-green-600 text-white px-4 py-2 font-bold rounded text-lg"
-          >
-            <span className="text-white">B</span>ooky
+          <Link to="/" className="font-bold text-2xl text-black-600">
+            Pathsala
           </Link>
 
           <div className="flex items-center gap-4 ml-auto flex-wrap">
@@ -183,28 +217,45 @@ const Layout = () => {
       </main>
 
       {/* Footer */}
-      <footer className="bg-white border-t p-6 grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
+      <footer className="bg-white border-t p-6 grid grid-cols-1 md:grid-cols-3 gap-6 text-sm text-center md:text-left">
         <div>
           <h3 className="font-bold mb-2 text-black">Contact</h3>
           <p>+977 1234567890</p>
-          <p>abcd@gmail.com</p>
+          <p>pathsala@gmail.com</p>
           <p>Rambazar, Pokhara</p>
         </div>
         <div>
           <h3 className="font-bold mb-2 text-black">About us</h3>
           <p>
-            Abchbchabckadbcyjbcj
-            <br />
-            cahjchabcjkabcjkabcjka
-            <br />
-            cahjchabchbckabckab
-            <br />
-            cdabchadbcadjcbajcbja
+            Pathsala is an online book store making books easily accessible in
+            Nepal.
           </p>
         </div>
-        <div>
-          <h3 className="font-bold mb-2 text-black">Socials</h3>
-          <p>Links to social platforms (Facebook, Twitter, etc.)</p>
+        <div className="flex justify-center md:justify-start">
+          <h3 className="font-bold mb-4 text-black">Socials</h3>
+          <div className="flex gap-4 mt-2 mr-4">
+            <a
+              href="https://facebook.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Facebook className="text-blue-600 hover:opacity-75" />
+            </a>
+            <a
+              href="https://instagram.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Instagram className="text-pink-500 hover:opacity-75" />
+            </a>
+            <a
+              href="https://twitter.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Twitter className="text-blue-400 hover:opacity-75" />
+            </a>
+          </div>
         </div>
       </footer>
     </div>

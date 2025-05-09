@@ -1,24 +1,37 @@
 import { Link } from "react-router-dom";
+import { BASE_URL } from "../../../lib/AuthService";
+ const getImageUrl = (imagePath) => {
+  if (!imagePath) return '/api/placeholder/200/300';
+  
+  // If it's already a full URL, return as is
+  if (imagePath.startsWith('http')) return imagePath;
+  
+  // For paths like "/uploads/images/filename.png"
+  // We need to prepend the BASE_URL but not duplicate the slash
+  return `${BASE_URL}${imagePath}`;
+};
 
-const BookCard = ({ book }) => {
+const BookCard = ({ book, }) => {
   return (
     <div className="border rounded shadow-sm hover:shadow-md transition-shadow">
+    
       <Link to={`/books/${book.id}`}>
-        <div className="w-full h-48 bg-gray-200 overflow-hidden">
-          {book.imageUrl ? (
+        <div className="w-full h-48 bg-gray-200 overflow-hidden relative">
+          {book.imageFileName ? (
+      
             <img
-              src={book.imageUrl || "/placeholder.svg"}
+              src={getImageUrl(book.imageFileName)}
               alt={book.title}
-              className="w-full h-full object-cover"
-              onError={(e) => {
-                e.target.onerror = null;
-                e.target.src = "/images/book-placeholder.jpg";
-              }}
+              className="w-full h-full object-contain absolute inset-0"
+              // onError={(e) => {
+              //   e.target.onerror = null;
+              //   e.target.src = "/images/book-placeholder.jpg";
+              // }}
             />
           ) : (
-            <div
-              className={`w-full h-full bg-gradient-to-r from-green-100 to-green-200`}
-            />
+            <div className="w-full h-full bg-gradient-to-r from-green-100 to-green-200 flex items-center justify-center">
+              <span className="text-gray-500 text-sm">No Image Available</span>
+            </div>
           )}
         </div>
       </Link>
